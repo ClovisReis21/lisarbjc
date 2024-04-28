@@ -1,0 +1,33 @@
+# 1 - Extração de Dados
+
+	## Fonte de dados confiável 1 (API - JSON)
+		https://newsapi.org/v2/everything?q=tesla&from=2024-03-25&sortBy=publishedAt&apiKey=8f63103f4fb54cc7b1eb6e24261c4df1
+		API_KEY=8f63103f4fb54cc7b1eb6e24261c4df1 -> mine
+		API_KEY=44fdc23c5c7a4469b609578563c10169
+	
+	## Fonte de dados confiável 2 (CSV)
+		https://www.kaggle.com/datasets/infobarbosa/pagamentos-bolsa-famlia?resource=download
+		Dados baixados em .csv
+		
+	## Fonte de dados confiável 3 (bkp)
+		https://dadosabertos.bcb.gov.br/dataset?q=&res_format=API&res_format=JSON&tags=Dados+Abertos+SFN&sort=score+desc%2C+metadata_modified+desc
+		
+	## Fonte de dados confiável 4 (bkp)
+		https://www.api-futebol.com.br/documentacao/campeonatos		
+		
+# 2 - Ingestão de Dados
+	
+	## Injsetão contínua
+		Fonte 1
+		Streaming (Kappa, Lambda)
+		
+	## Injestão em lote
+		Fonte 2
+		ETL
+		
+# 3 - Armazenamento de Dados
+
+TODO:
+    Desenvolver geração de vendas simuladas - Loja Surreal com banco de dados
+    Integrar o sistema da Loja Surreal com um Streaming para alimentar a camada bronze do Data Lake
+    Desenvolver sistema de Observabilidade que organiza os LOGs em CSV
