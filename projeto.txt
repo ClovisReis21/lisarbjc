@@ -28,6 +28,6 @@
 # 3 - Armazenamento de Dados
 
 TODO:
-    Desenvolver geração de vendas simuladas - Loja Surreal com banco de dados
-    Integrar o sistema da Loja Surreal com um Streaming para alimentar a camada bronze do Data Lake
+    Desenvolver geração de vendas simuladas - Loja Simulada com banco de dados
+    Integrar o sistema da Loja Simulada com um Streaming para alimentar a camada bronze do Data Lake
     Desenvolver sistema de Observabilidade que organiza os LOGs em CSV
