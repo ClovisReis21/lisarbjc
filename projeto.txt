@@ -1,24 +1,28 @@
 # 1 - Extração de Dados
+	Os dados serão simulados a partir de uma aplicação (sistema de vendas) chamada Loja Simulada, de geração de dados de venda. Esta aplicação foi apresentada no curso "Formação Engenharia de Dados: Domine Big Data!" ministrado pelo instrutor Fernando Amaral pela plataforma Udemy.
 
-	## Fonte de dados confiável 1 (API - JSON)
-		https://newsapi.org/v2/everything?q=tesla&from=2024-03-25&sortBy=publishedAt&apiKey=8f63103f4fb54cc7b1eb6e24261c4df1
-		API_KEY=8f63103f4fb54cc7b1eb6e24261c4df1 -> mine
-		API_KEY=44fdc23c5c7a4469b609578563c10169
+	Inicialmente o banco de dados do sistema de vendas e a aplicação rodará em docker, com o intuito de facilitar a evolução do desenvolvimento.
 	
-	## Fonte de dados confiável 2 (CSV)
-		https://www.kaggle.com/datasets/infobarbosa/pagamentos-bolsa-famlia?resource=download
-		Dados baixados em .csv
-		
-	## Fonte de dados confiável 3 (bkp)
-		https://dadosabertos.bcb.gov.br/dataset?q=&res_format=API&res_format=JSON&tags=Dados+Abertos+SFN&sort=score+desc%2C+metadata_modified+desc
-		
-	## Fonte de dados confiável 4 (bkp)
-		https://www.api-futebol.com.br/documentacao/campeonatos		
+	Fontes de dados anteriormente consideradas:
+		Fonte de dados confiável 1 (API - JSON)
+			https://newsapi.org/v2/everything?q=tesla&from=2024-03-25&sortBy=publishedAt&apiKey=8f63103f4fb54cc7b1eb6e24261c4df1
+			API_KEY=8f63103f4fb54cc7b1eb6e24261c4df1 -> mine
+			API_KEY=44fdc23c5c7a4469b609578563c10169
+
+		Fonte de dados confiável 2 (CSV)
+			https://www.kaggle.com/datasets/infobarbosa/pagamentos-bolsa-famlia?resource=download
+			Dados baixados em .csv
+			
+		Fonte de dados confiável 3 (bkp)
+			https://dadosabertos.bcb.gov.br/dataset?q=&res_format=API&res_format=JSON&tags=Dados+Abertos+SFN&sort=score+desc%2C+metadata_modified+desc
+			
+		Fonte de dados confiável 4 (bkp)
+			https://www.api-futebol.com.br/documentacao/campeonatos		
 		
 # 2 - Ingestão de Dados
 	
 	## Injsetão contínua
-		Fonte 1
+		O sistema de vendas (Loja Simulada) exportará por streaming cada contrato (venda) realizada
 		Streaming (Kappa, Lambda)
 		
 	## Injestão em lote
@@ -29,5 +33,6 @@
 
 TODO:
     Desenvolver geração de vendas simuladas - Loja Simulada com banco de dados
+		Instalar mysql.txt
     Integrar o sistema da Loja Simulada com um Streaming para alimentar a camada bronze do Data Lake
     Desenvolver sistema de Observabilidade que organiza os LOGs em CSV
