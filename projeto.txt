@@ -34,5 +34,84 @@
 TODO:
     Desenvolver geração de vendas simuladas - Loja Simulada com banco de dados
 		Instalar mysql.txt
+		Dados dos clientes/Vendedores devem conter:
+			CPF				=> pyCPFgen.py
+			Telefone		=> pyCELgen.py
+			E-mail			=> pyTOLOW.py
+			Origem racial	=> pyRACA.py
+		Instalar nodejs
+			FONTE: https://nodejs.org/en/download/package-manager
+			Instalar o NVM (node version manager)
+				$ curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+			Instalar o nodejs com o NVM
+				$ nvm install 20
+			Instalar o postman
+				sudo snap install postman
+		Criar endpoints para insert em cada tabela
+		Criar loop para inset de venda e intenVenda
+		Integrar com mensageria (kafka)
+			Utilizar pacote kafkajs para produzir no tópico (producer)
+			
+	Instalar kafka
+		Baixar kafka (arquivos)
+		Descompactar
+		Rodar o serviço zookeeper (dependência do kafka)
+			./zookeeper-server-start.sh ../config/zookeeper.properties
+		Rodar o serviço kafka
+			./kafka-server-start.sh ../config/server.properties
+		Criar tópico
+			./kafka-topics.sh --create --topic vendas-deshboard-bronze --bootstrap-server localhost:9092
+			./kafka-topics.sh --create --topic vendas-deshboard-gold --bootstrap-server localhost:9092
+		Visualisar informações dos topicos
+			./kafka-topics.sh  --list --bootstrap-server localhost:9092
+			./kafka-topics.sh --describe --topic vendas-deshboard-bronze --bootstrap-server localhost:9092
+		Produtor-by-terminal
+			./kafka-console-producer.sh --topic vendas-deshboard-bronze --bootstrap-server localhost:9092
+		Consumidor-by-terminal
+			./kafka-console-consumer.sh --topic vendas-deshboard-bronze --bootstrap-server localhost:9092
+			./kafka-console-consumer.sh --topic vendas-deshboard-gold --bootstrap-server localhost:9092
+
+	Instalar SCALA:
+		sudo apt-get install scala
+
+	Instalar O Spark
+		Baixar tgz:
+			https://dlcdn.apache.org/spark/spark-3.5.1/spark-3.5.1-bin-hadoop3.tgz
+		Unzip na pasta opt/spark
+		Iniciar nó master stant alone:
+			start-master.sh
+		Iniciar worker procces spark
+			/opt/spark/sbin/start-slave.sh spark://localhost:7077
+		Instalar Jupyter Notebook
+			pip install jupyter
+		Utilizar jupyter notebook
+			jupyter notebook
+		Sumarização para dashboard:
+			Ranking dos produtos mais vendidos order by 'produto' desc
+				+---------+-----+-------------+----------+-------------+
+				| PRODUTO | QTD | VALOR VENDA | DESCONTO | VALOR FINAL |
+				+---------+-----+-------------+----------+-------------+
+			Ranking das melhores vendas ORDER order by DESCONTO asc, VALOR FINAL desc
+				+---------------+----------+-------------+
+				| VENDEDOR (ID) | DESCONTO | VALOR FINAL |
+				+---------------+----------+-------------+
+			Grafico receita vs desconto
+		Enviar sumarizados para kafka:
+
+			
+		
+
+	Anonimização/Pseudonizados
     Integrar o sistema da Loja Simulada com um Streaming para alimentar a camada bronze do Data Lake
     Desenvolver sistema de Observabilidade que organiza os LOGs em CSV
+
+
+# Transaction Sample
+{"transaction_id": "1", "customer_id": "111", "amount": 111, "transaction_timestamp": "2023-04-21T11:11:111Z", "merchant_id": "MerchantX"}
+{"transaction_id": "2", "customer_id": "222", "amount": 222, "transaction_timestamp": "2023-04-21T22:22:222Z", "merchant_id": "MerchantY"}
+{"transaction_id": "3", "customer_id": "333", "amount": 333, "transaction_timestamp": "2023-04-22T33:33:333Z", "merchant_id": "MerchantX"}
+{"transaction_id": "4", "customer_id": "444", "amount": 444, "transaction_timestamp": "2023-04-28T44:44:44Z", "merchant_id": "MerchantX"}
+
+{"name": "cj"}
+
+{"id_vendedor": 1,"id_cliente": 10,"id_produto": 1,"id_venda": 1,"quantidade": 1,"valor_unitario": 5.0,"valor_total": 4.0,"desconto": 1.0,"data": "2023-04-28 10:44:44"}
