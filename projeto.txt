@@ -31,6 +31,45 @@
 		
 # 3 - Armazenamento de Dados
 
+# 4 - SSL / SASL (KAFKA GSSAPI - Kerberos)
+
+# 5 - kafka - 2 brokers - 2 parições por topic
+
+# 5 - LGPD:
+	Definições:
+		A LGPD (Lei Geral de Proteção de Dados) define diversos tipos de dados pessoais e sensíveis que são protegidos sob a legislação brasileira. Aqui estão alguns exemplos:
+			1.Dados Pessoais: São informações que identificam ou que, quando usadas em conjunto, podem identificar uma pessoa física. Isso inclui nome, CPF, RG, endereço, e-mail, entre outros.
+			2.Dados Sensíveis: São informações sobre origem racial ou étnica, convicções religiosas, opiniões políticas, filiação a sindicatos ou organizações de natureza religiosa, filosófica ou política, dados genéticos, dados biométricos, dados relativos à saúde ou à vida sexual, dados relacionados à criança e ao adolescente, entre outros, que possam gerar discriminação ou preconceito.
+			3.Dados Anonimizados: Informações que não identificam uma pessoa específica e que não podem ser facilmente rastreadas para identificar um indivíduo sem o uso de informações adicionais.
+			4.Dados Pseudonimizados: São dados pessoais que foram modificados de forma que não possam ser atribuídos a uma pessoa específica sem o uso de informações adicionais.
+			5.Dados de Menores: Informações relacionadas a crianças e adolescentes, que exigem consentimento específico e, em alguns casos, consentimento dos responsáveis legais para processamento.
+			6.Dados Empresariais: Informações relacionadas a empresas e organizações, como CNPJ, dados de contato empresarial, informações financeiras, entre outros.
+			A LGPD estabelece diretrizes para o tratamento adequado e legal desses dados, incluindo o consentimento do titular dos dados, a finalidade do uso, a segurança da informação e os direitos dos titulares dos dados.
+	Considerar no projeto:
+		- Garantia de consentimento explícito dos usuários para o uso de seus dados:
+			Deixar explicito que somos parceiros autorizados a traar os dados dos clientes da loja simulada
+		- Controle de acesso aos dados;
+		- 3 tipos de dados:
+			- Dados pessoais identificados:
+				- São aqueles que por sí sõ, conseguem identifidar o titular. Exemplo: nome, RG/CPF, número do passaporte, CNH, CTPS, PIS/NIS etc.
+			- Dados pessoais identificáveis:
+				- São aqueles que não permitem a identificação direta do titular, mas, em conjunto com outras informações, contribuem para atingir este objetivo. Exemplo: idade, múmero de telefone, nome da mãe, nome do pai, endereço residencial, dado biométrico, Penumper, número de matrícula etc.
+			- Dados pessoais sensíveis:
+				- São os dados que fazem parte de uma esfera mais íntima e privada. O seu uso pode gerar discriminação ao titular do dado. Exemplo: Dados sobre origem racial ou ética, convicção religiosa, opnião política, filiação a sindicato ou a organização de caráter religioso, fiosófico ou político. Dados referêntes à saúde e ou à vida sexual. Dados genéricos ou biométricos.
+		Titulares dos dados:
+			- Clientes da Loja Simulada;
+			- Funcionarios da Loja Simulada:
+		Controladores dos dados:
+			- Loja Simulada - A Loja Simulada detem, de todos os seus clientes e funcionários (titulares dos dados) o consentimento para compartilhamento de seus dados com parceiros para fins de análises no contexto da Loja Simulada;
+		Operador:
+			- Eng. Dados - A Loja Simulada nos permite operar os dados no tocante à análises que permitam auxiliar no contexto do negócio 'Loja Simulada'.
+		Orgão Regulador:
+			ANDP.
+		Encarregado de proteção de dados:
+			- Intermediário entre Loja Simulada e Clientes/Funcionnários.
+		
+
+
 TODO:
     Desenvolver geração de vendas simuladas - Loja Simulada com banco de dados
 		Instalar mysql.txt
@@ -52,7 +91,7 @@ TODO:
 		Integrar com mensageria (kafka)
 			Utilizar pacote kafkajs para produzir no tópico (producer)
 			
-	Instalar kafka
+	Instalar kafka:
 		Baixar kafka (arquivos)
 		Descompactar
 		Rodar o serviço zookeeper (dependência do kafka)
@@ -67,6 +106,7 @@ TODO:
 			./kafka-topics.sh --describe --topic vendas-deshboard-bronze --bootstrap-server localhost:9092
 		Produtor-by-terminal
 			./kafka-console-producer.sh --topic vendas-deshboard-bronze --bootstrap-server localhost:9092
+			./kafka-console-producer.sh --topic vendas-deshboard-gold --bootstrap-server localhost:9092
 		Consumidor-by-terminal
 			./kafka-console-consumer.sh --topic vendas-deshboard-bronze --bootstrap-server localhost:9092
 			./kafka-console-consumer.sh --topic vendas-deshboard-gold --bootstrap-server localhost:9092
@@ -74,9 +114,9 @@ TODO:
 	Instalar SCALA:
 		sudo apt-get install scala
 
-	Instalar O Spark
+	Instalar o Spark:
 		Baixar tgz:
-			https://dlcdn.apache.org/spark/spark-3.5.1/spark-3.5.1-bin-hadoop3.tgz
+			wget https://dlcdn.apache.org/spark/spark-3.5.1/spark-3.5.1-bin-hadoop3.tgz
 		Unzip na pasta opt/spark
 		Iniciar nó master stant alone:
 			start-master.sh
@@ -87,31 +127,78 @@ TODO:
 		Utilizar jupyter notebook
 			jupyter notebook
 		Sumarização para dashboard:
-			Ranking dos produtos mais vendidos order by 'produto' desc
-				+---------+-----+-------------+----------+-------------+
-				| PRODUTO | QTD | VALOR VENDA | DESCONTO | VALOR FINAL |
-				+---------+-----+-------------+----------+-------------+
-			Ranking das melhores vendas ORDER order by DESCONTO asc, VALOR FINAL desc
-				+---------------+----------+-------------+
-				| VENDEDOR (ID) | DESCONTO | VALOR FINAL |
-				+---------------+----------+-------------+
-			Grafico receita vs desconto
+			Ranking dos produtos mais vendidos order by 'QTD' desc -> BARRA VERTICAL
+				+---------+-----+-------------+
+				| PRODUTO | QTD | VALOR FINAL |
+				+---------+-----+-------------+
+			Ranking das melhores vendas ORDER order by VALOR FINAL desc - > BARRA HORIZONTAL
+				+---------------+-------------+
+				| VENDEDOR (ID) | VALOR FINAL |
+				+---------------+-------------+
+			Grafico receita vs desconto -> PIZZA
+				+-------------+----------+-------------+
+				| VALOR FINAL | DESCONTO | VALOR VENDA |
+				+-------------+----------+-------------+
+			Total receita -> CARD
+				+-------------------+
+				| VALOR FINAL TOTAL |
+				+-------------------+
 		Enviar sumarizados para kafka:
 
+	*Instalar o SQOOP:
+		Baixar tgz:
+			wget https://archive.apache.org/dist/sqoop/1.4.4/sqoop-1.4.4.bin__hadoop-2.0.4-alpha.tar.gz
+		Unzip:
+			tar -xvf sqoop-1.4.4.bin__hadoop-2.0.4-alpha.tar.gz
+		mover para pasta opt/sqoop:
+			sudo mv sqoop-1.4.4.bin__hadoop-2.0.4 /opt/sqoop
+
+	install Kerberos:
+		sudo apt install krb5-kdc krb5-admin-server
+		sudo apt install krb5-user krb5-config
+		sudo krb5_newrealm
+			master key name 'K/M@cj'
+			master key pass 'cj'
 			
+		reiniciar o drb5-admin-server:
+			sudo systemctl restart krb5-admin-server.service
+
 		
+		/usr/share/doc/krb5-kdc/README.KDC
+
+	logins:
+		grupos de usuários:
+			sudo groupadd nivel_alto
+			sudo groupadd nivel_medio
+			sudo groupadd nivel_baixo
+		usuários:
+			usuário 'view' '@brasil123' - nivel_baixo
+				sudo usermod -aG nivel_baixo view
+			
+
+	instalar o Hive:
+		https://downloads.apache.org/hive/hive-3.1.3/apache-hive-3.1.3-bin.tar.gz
+		Unzip:
+			tar -xzvf apache-hive-3.1.3-bin.tar.gz
+
+	links estudos:
+		https://ubuntu.com/server/docs/how-to-install-a-kerberos-server
+		https://medium.com/@mmodi2561/sqoop-configuration-with-mysql-connector-74b344603912
+		https://www.simplilearn.com/tutorials/hadoop-tutorial/sqoop
+		https://repo1.maven.org/maven2/org/apache/kafka/kafka-clients/
+		https://blog.devgenius.io/pyspark-and-kafka-streaming-reading-and-writing-data-in-different-formats-149c78b54f9
+		https://subhamkharwal.medium.com/learnbigdata101-spark-series-940160ff4d30
+		https://medium.com/sicara/get-started-pyspark-jupyter-guide-tutorial-ae2fe84f594f
+		https://www.youtube.com/@easewithdata
+		https://www.youtube.com/@escoladeinteligenciaartifi6597/playlists
+
 
 	Anonimização/Pseudonizados
     Integrar o sistema da Loja Simulada com um Streaming para alimentar a camada bronze do Data Lake
     Desenvolver sistema de Observabilidade que organiza os LOGs em CSV
 
 
-# Transaction Sample
-{"transaction_id": "1", "customer_id": "111", "amount": 111, "transaction_timestamp": "2023-04-21T11:11:111Z", "merchant_id": "MerchantX"}
-{"transaction_id": "2", "customer_id": "222", "amount": 222, "transaction_timestamp": "2023-04-21T22:22:222Z", "merchant_id": "MerchantY"}
-{"transaction_id": "3", "customer_id": "333", "amount": 333, "transaction_timestamp": "2023-04-22T33:33:333Z", "merchant_id": "MerchantX"}
-{"transaction_id": "4", "customer_id": "444", "amount": 444, "transaction_timestamp": "2023-04-28T44:44:44Z", "merchant_id": "MerchantX"}
 
-{"name": "cj"}
+{"id_vendedor":1,"id_cliente":10,"id_produto":1,"id_venda":1,"quantidade":100,"valor_unitario":5.0,"valor_total":2000.0,"desconto":900.0,"data":"2023-04-28 10:44:44.000"}
 
-{"id_vendedor": 1,"id_cliente": 10,"id_produto": 1,"id_venda": 1,"quantidade": 1,"valor_unitario": 5.0,"valor_total": 4.0,"desconto": 1.0,"data": "2023-04-28 10:44:44"}
+

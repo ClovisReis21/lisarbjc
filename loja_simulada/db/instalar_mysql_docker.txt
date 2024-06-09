@@ -6,4 +6,7 @@ Instala o Mysql client
     sudo apt install mysql-client-8.0
     acessando mysql pelo terminal (mysql-client)
         sudo mysql -h127.0.0.1 -P3306 -uroot -proot
-
+Criar usuário para injestão dos dados:
+    CREATE USER 'big_data_importer'@'%' IDENTIFIED BY 'big_data_importer';
+    GRANT SELECT ON vendas.* TO 'big_data_importer'@'%';
+    ? FLUSH PRIVILEGES;

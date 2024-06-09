@@ -1,0 +1,23 @@
+Spark Command: /usr/lib/jvm/java-11-openjdk-amd64/bin/java -cp /opt/spark/conf/:/opt/spark/jars/* -Xmx1g org.apache.spark.deploy.master.Master --host cj --port 7077 --webui-port 8080
+========================================
+Using Spark's default log4j profile: org/apache/spark/log4j2-defaults.properties
+24/06/04 21:21:50 INFO Master: Started daemon with process name: 25897@cj
+24/06/04 21:21:50 INFO SignalUtils: Registering signal handler for TERM
+24/06/04 21:21:50 INFO SignalUtils: Registering signal handler for HUP
+24/06/04 21:21:50 INFO SignalUtils: Registering signal handler for INT
+24/06/04 21:21:50 WARN Utils: Your hostname, cj resolves to a loopback address: 127.0.1.1; using 192.168.15.34 instead (on interface enp2s0)
+24/06/04 21:21:50 WARN Utils: Set SPARK_LOCAL_IP if you need to bind to another address
+24/06/04 21:21:50 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+24/06/04 21:21:50 INFO SecurityManager: Changing view acls to: cj
+24/06/04 21:21:50 INFO SecurityManager: Changing modify acls to: cj
+24/06/04 21:21:50 INFO SecurityManager: Changing view acls groups to: 
+24/06/04 21:21:50 INFO SecurityManager: Changing modify acls groups to: 
+24/06/04 21:21:50 INFO SecurityManager: SecurityManager: authentication disabled; ui acls disabled; users with view permissions: cj; groups with view permissions: EMPTY; users with modify permissions: cj; groups with modify permissions: EMPTY
+24/06/04 21:21:51 INFO Utils: Successfully started service 'sparkMaster' on port 7077.
+24/06/04 21:21:51 INFO Master: Starting Spark master at spark://cj:7077
+24/06/04 21:21:51 INFO Master: Running Spark version 3.5.1
+24/06/04 21:21:51 INFO JettyUtils: Start Jetty 0.0.0.0:8080 for MasterUI
+24/06/04 21:21:51 INFO Utils: Successfully started service 'MasterUI' on port 8080.
+24/06/04 21:21:51 INFO MasterWebUI: Bound MasterWebUI to 0.0.0.0, and started at http://192.168.15.34:8080
+24/06/04 21:21:51 INFO Master: I have been elected leader! New state: ALIVE
+24/06/04 23:30:30 ERROR Master: RECEIVED SIGNAL TERM
