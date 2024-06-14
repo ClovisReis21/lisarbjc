@@ -115,15 +115,28 @@ TODO:
 		sudo apt-get install scala
 
 	Instalar o Spark:
+		Instalar o java:
+			sudo apt install curl mlocate default-jdk -y
 		Baixar tgz:
 			wget https://dlcdn.apache.org/spark/spark-3.5.1/spark-3.5.1-bin-hadoop3.tgz
 		Unzip na pasta opt/spark
+			tar xvf spark....
+		Salvar em: /opt/spark
+		inserir PATH:
+			gedit ~/.bashrc:
+				export SPARK_HOME=/opt/spark
+				export PATH=$PATH:$SPARK_HOME/bin:$SPARK_HOME/sbin
+			atualiza source:
+				source ~/.bashrc
 		Iniciar nó master stant alone:
 			start-master.sh
+				stop-master.sh
 		Iniciar worker procces spark
 			/opt/spark/sbin/start-slave.sh spark://localhost:7077
+				stop-slave.sh
 		Instalar Jupyter Notebook
-			pip install jupyter
+			pip install jupyter ou sudo -H pip install jupyter
+			pip install findspark
 		Utilizar jupyter notebook
 			jupyter notebook
 		Sumarização para dashboard:
@@ -174,8 +187,13 @@ TODO:
 		usuários:
 			usuário 'view' '@brasil123' - nivel_baixo
 				sudo usermod -aG nivel_baixo view
+				sudo chown :nivel_baixo lab/no
+				sudo chmod g-rwx lab/no
 			
+		sudo chown -R cj /opt/spark/logs
+		sudo chmod -R  u+rwx /opt/spark/logs
 
+		
 	instalar o Hive:
 		https://downloads.apache.org/hive/hive-3.1.3/apache-hive-3.1.3-bin.tar.gz
 		Unzip:

@@ -1,0 +1,28 @@
+version: '3'
+services:
+  loja_imulada:
+    image: loja_simulada_image
+    container_name: loja_simulada
+    hostname: loja_simulada
+    ports:
+      - "30001:30001"
+    environment:
+      PORTA: 30001
+      LOCAL_DB_HOST: localhost
+      LOCAL_DB_USER: root
+      LOCAL_DB_PASS: root
+      LOCAL_DB_DATABASE: vendas
+    command: npm run start
+
+# version: '3'
+# services:
+#   app:
+#     build: .
+#     volumes:
+#       - .:/app
+#     container_name: docker-node-tut
+#     restart: always
+#     ports:
+#       - 30001:30001
+#     command: sh -c /start.sh
+#     env_file: .env
