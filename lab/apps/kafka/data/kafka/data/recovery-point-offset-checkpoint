@@ -8,7 +8,7 @@ __consumer_offsets 4 0
 __consumer_offsets 27 0
 __consumer_offsets 7 0
 __consumer_offsets 9 0
-__consumer_offsets 46 426
+__consumer_offsets 46 428
 __consumer_offsets 25 0
 __consumer_offsets 35 0
 vendas-deshboard-gold 0 408
@@ -52,4 +52,4 @@ __consumer_offsets 34 0
 __consumer_offsets 10 0
 __consumer_offsets 32 0
 __consumer_offsets 40 0
-vendas-deshboard-bronze 0 1061
+vendas-deshboard-bronze 0 1650

@@ -190,8 +190,35 @@ TODO:
 				sudo chown :nivel_baixo lab/no
 				sudo chmod g-rwx lab/no
 			
-		sudo chown -R cj /opt/spark/logs
-		sudo chmod -R  u+rwx /opt/spark/logs
+		ACLs:
+			sudo adduser user1
+			sudo adduser user1 users
+			sudo setfacl -m u:user1:r-x lisarbjc/lab/lake/GOLD/
+			sudo setfacl -m u:user1:--- lisarbjc/lab/lake/root
+			sudo setfacl -m u:user1:--- lisarbjc/lab/lake/user2
+			sudo setfacl -m u:user1:--- lisarbjc/lab/lake/user3
+			sudo setfacl -m u:user1:--- lisarbjc/lab/lake/SILVER/
+			sudo setfacl -m u:user1:--- lisarbjc/lab/lake/BRONZE/
+
+			sudo adduser user2
+			sudo adduser user2 users
+			sudo setfacl -m u:user2:r-x lisarbjc/lab/lake/GOLD/
+			sudo setfacl -m u:user2:r-x lisarbjc/lab/lake/SILVER/
+			sudo setfacl -m u:user2:--- lisarbjc/lab/lake/root
+			sudo setfacl -m u:user2:--- lisarbjc/lab/lake/user1
+			sudo setfacl -m u:user2:--- lisarbjc/lab/lake/user3
+			sudo setfacl -m u:user2:--- lisarbjc/lab/lake/BRONZE/
+
+			sudo adduser user3
+			sudo adduser user3 users
+			sudo setfacl -m u:user3:r-x lisarbjc/lab/lake/GOLD/
+			sudo setfacl -m u:user3:r-x lisarbjc/lab/lake/SILVER/
+			sudo setfacl -m u:user3:r-x lisarbjc/lab/lake/BRONZE/
+			sudo setfacl -m u:user3:--- lisarbjc/lab/lake/root
+			sudo setfacl -m u:user3:--- lisarbjc/lab/lake/user1
+			sudo setfacl -m u:user3:--- lisarbjc/lab/lake/user2
+
+			getfacl -R /caminho/para/a/pasta
 
 		
 	instalar o Hive:

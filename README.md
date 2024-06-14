@@ -8,7 +8,6 @@ Dependências:
         findspark
         mysql-client-8.0
         node
-        mp2 -g
         jupyter notebook:
             inicializar na pasta certa:
                 criar arquivo de configuração:
