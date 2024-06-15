@@ -1,0 +1,16 @@
+FROM node:18-alpine as loja_simulada_image
+WORKDIR /app
+# Install app dependencies
+# A wildcard is used to ensure both package.json AND package-lock.json are copied
+COPY package*.json .
+# We have to install nodemon globally before moving into the working directory
+RUN npm install
+# Bundle app source
+COPY . .
+# RUN npm run build
+EXPOSE 30001
+# CMD ["node", "app.js"]
+
+# sudo docker build . -t loja_simulada_image
+# sudo docker ps -a
+# sudo docker run -p 30001:30001 loja_simulada_image

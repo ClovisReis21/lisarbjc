@@ -1,0 +1,10 @@
+FROM node:18-alpine as api_dashboard_imagem
+WORKDIR /app
+COPY package*.json .
+RUN npm install
+COPY . .
+EXPOSE 4000
+
+# sudo docker build . -t api_dashboard_imagem
+# sudo docker ps -a
+# sudo docker run -p 30001:30001 api_dashboard_imagem
