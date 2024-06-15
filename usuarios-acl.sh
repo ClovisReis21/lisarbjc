@@ -1,26 +1,23 @@
 echo "Iniciando criacao de usuarios..."
-adduser user1
-adduser user1 users
-setfacl -m u:user1:r-x lisarbjc/lab/lake/GOLD/
-setfacl -m u:user1:--- lisarbjc/lab/lake/root
-setfacl -m u:user1:--- lisarbjc/lab/lake/user2
-setfacl -m u:user1:--- lisarbjc/lab/lake/user3
-setfacl -m u:user1:--- lisarbjc/lab/lake/SILVER/
-setfacl -m u:user1:--- lisarbjc/lab/lake/BRONZE/
-adduser user2
-adduser user2 users
-setfacl -m u:user2:r-x lisarbjc/lab/lake/GOLD/
-setfacl -m u:user2:r-x lisarbjc/lab/lake/SILVER/
-setfacl -m u:user2:--- lisarbjc/lab/lake/root
-setfacl -m u:user2:--- lisarbjc/lab/lake/user1
-setfacl -m u:user2:--- lisarbjc/lab/lake/user3
-setfacl -m u:user2:--- lisarbjc/lab/lake/BRONZE/
-adduser user3
-adduser user3 users
-setfacl -m u:user3:r-x lisarbjc/lab/lake/GOLD/
-setfacl -m u:user3:r-x lisarbjc/lab/lake/SILVER/
-setfacl -m u:user3:r-x lisarbjc/lab/lake/BRONZE/
-setfacl -m u:user3:--- lisarbjc/lab/lake/root
-setfacl -m u:user3:--- lisarbjc/lab/lake/user1
-setfacl -m u:user3:--- lisarbjc/lab/lake/user2
-echo "Finaizada a tarefa usuarios!"
+useradd -m -G users -p '$1$R48kpzsm$wCiNo1pAZlE1jw60RgReo0' user1
+setfacl -m u:user1:r-x /home/lisarbjc/lab/lake/GOLD/
+setfacl -m u:user1:--- /home/lisarbjc/lab/lake/root
+setfacl -m u:user1:--- /home/lisarbjc/lab/lake/user2
+setfacl -m u:user1:--- /home/lisarbjc/lab/lake/user3
+setfacl -m u:user1:--- /home/lisarbjc/lab/lake/SILVER/
+setfacl -m u:user1:--- /home/lisarbjc/lab/lake/BRONZE/
+useradd -m -G users -p '$1$.JRFD56.$XJP.1ki7uRr0bzwO/l/aD/' user2
+setfacl -m u:user2:r-x /home/lisarbjc/lab/lake/GOLD/
+setfacl -m u:user2:r-x /home/lisarbjc/lab/lake/SILVER/
+setfacl -m u:user2:--- /home/lisarbjc/lab/lake/root
+setfacl -m u:user2:--- /home/lisarbjc/lab/lake/user1
+setfacl -m u:user2:--- /home/lisarbjc/lab/lake/user3
+setfacl -m u:user2:--- /home/lisarbjc/lab/lake/BRONZE/
+useradd -m -G users -p '$1$0ThUdYgP$RDTLvVmrCLiHga3umgS3e.' user3
+setfacl -m u:user3:r-x /home/lisarbjc/lab/lake/GOLD/
+setfacl -m u:user3:r-x /home/lisarbjc/lab/lake/SILVER/
+setfacl -m u:user3:r-x /home/lisarbjc/lab/lake/BRONZE/
+setfacl -m u:user3:--- /home/lisarbjc/lab/lake/root
+setfacl -m u:user3:--- /home/lisarbjc/lab/lake/user1
+setfacl -m u:user3:--- /home/lisarbjc/lab/lake/user2
+echo "Finaizada tarefa usuarios!"
