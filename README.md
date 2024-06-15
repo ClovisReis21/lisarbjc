@@ -3,7 +3,8 @@ Clone o repositório
 
 Dependências:
     arquivo - instalar-dependencias.sh é o responsavel por instalar as dependências listadas aqui. Caso este não finalize com sucesso, estas devem ser instaladas manualmente antes de seguir para as próximas etapas.
-        docker
+        docker -> deve estar instalado!!!
+        	https://docs.docker.com/engine/install/ubuntu/
         pyspark
         findspark
         mysql-client-8.0
