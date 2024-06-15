@@ -14,76 +14,76 @@ O sócio fundador da Loja Simulada (uma loja de bicicleta) expos as seguintes ne
 
 ## Considerações - Loja Simulada
 
-1. Possui um sistema de vendas (transacional com vendasd geradas aleatoriamente);
+1. Possui um sistema de vendas (transacional com vendas geradas aleatoriamente);
 
-2. Detém, de todos os seus clientes e funcionários (titulares dos dados), o concentimento para compartilhamento e/ou tratamento de seus dados com parceiros para fins de análises no contexto da Loja Simulada;
+2. Detém, de todos os seus clientes e funcionários (titulares dos dados), o concentimento para fazer o compartilhamento e/ou tratamento de seus dados com parceiros para fins de análises no contexto da Loja Simulada;
 
-3. A schema do banco de dados foi baseado no curso **Formação Engenharia de Dados: Domine Big Data!** [Formação Engenharia de Dados: Domine Big Data!](https://www.udemy.com/course/engenheiro-de-dados) do instrutor *Fernando Amaral* [Fernando Amaral](https://www.udemy.com/course/engenheiro-de-dados/#instructor-1)
+3. A schema do banco de dados foi baseado no curso [Formação Engenharia de Dados: Domine Big Data!](https://www.udemy.com/course/engenheiro-de-dados) do instrutor [Fernando Amaral](https://www.udemy.com/course/engenheiro-de-dados/#instructor-1)
 
 4. Além do conteúdo parcialmente aproveitado do curso citado no item 3, alguns dados foram gerados aleatoreamente como: cpf, telefone, origem racial afim de compor a experiência do case em questão atravéz das aplicações em python contidas neste projeto (pyCPFgen.py, pyCELgen.py e pyOrigemRacial.py). 
 Estes podem ser encontrados em */lab/utils*
 
 ## Arquitetura da solução
 
-A arquitetura foi pensada considerando a arquitetura Lambda.
+* A arquitetura foi pensada considerando a arquitetura Lambda.
 
-Para o acompanhamento em tempo real (near real time para ser mais exato), o responsável pelo sistema transacional da Loja Simulada ficou com a responsabilidade de fornecer para um tópico do Apacke kafka [Apacke kafka](https://kafka.apache.org/), os dados de cada tranzação assim que esta esteja concluída. O SparkStream  [SparkStream](https://spark.apache.org/docs/latest/structured-streaming-programming-guide.html) (Structured Streaming)  [Structured Streaming](https://spark.apache.org/docs/latest/structured-streaming-programming-guide.html) ouve este mesmo tópico, realiza a sumarização das informações e encaminha para um segundo tópico. Uma API - desenvolvidad em NodeJs [NodeJs](https://nodejs.org/en/) - consome estes dados neste segundo tópico e, conectada via WebSocket (WS) [WebSocket](https://developer.mozilla.org/pt-BR/docs/Web/API/WebSockets_API) à um aaplicação customizada - também desenvolvida em NodeJs [NodeJs](https://nodejs.org/en/) - para dashboard, atualiza o dashboard.
+* Para o acompanhamento em tempo real (near real time para ser mais exato), o responsável pelo sistema transacional da Loja Simulada ficou com a responsabilidade de fornecer para um tópico do [Apacke kafka](https://kafka.apache.org/), os dados de cada tranzação assim que esta esteja concluída. O [SparkStream](https://spark.apache.org/docs/latest/structured-streaming-programming-guide.html) (Structured Streaming) ouve este mesmo tópico, realiza a sumarização das informações e encaminha para um segundo tópico. Uma API - desenvolvidad em [NodeJs](https://nodejs.org/en/) - consome estes dados neste segundo tópico e, conectada via (WS) [WebSocket](https://developer.mozilla.org/pt-BR/docs/Web/API/WebSockets_API) à uma aplicação customizada - também desenvolvida em [NodeJs](https://nodejs.org/en/) - para dashboard, atualiza o dashboard.
 
-Para a disponibilização dos dados em um formato adequado para análise por ferramentas apropriadas de BI/OLAP, foi considerado a arquiteura medalhão, contendo as camadas bronze, siver e gold. Fazendo a coleta dos dados no banco de dados transacional do sistema Loja Simulada periodicamente em horário apropriado - trazendo menor impacto possível para a operação da loja (transacional) - com o Apache Spark [Apache Spark](https://spark.apache.org/), e disponibilizado em uma camada bronze (somente dados novos e/ou alterados). Tembém periodicamente, os dados são coletados da camada bronze utilizando o Apache Spark [Apache Spark](https://spark.apache.org/), tratados de acordo com a LGPD (Lei Geral de Proteção de Dados) [LGPD](https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm) e salvos na camada silver. E não diferente dos demais, estes são coletados da camada silver pelo Apache Spark [Apache Spark](https://spark.apache.org/), tratados de acordo com uma modelagem dimensional estrela e disponibilizados na camada ouro.
+* Para a disponibilização dos dados em um formato adequado para análise por ferramentas apropriadas de BI/OLAP, foi considerado a arquiteura medalhão, contendo as camadas bronze, silver e gold. Fazendo a coleta dos dados no banco de dados transacional do sistema Loja Simulada periodicamente em horário apropriado - trazendo menor impacto possível para a operação da loja (transacional) - com o [Apache Spark](https://spark.apache.org/), e disponibilizado em uma camada bronze (somente dados novos e/ou alterados). Tembém periodicamente, os dados são coletados da camada bronze utilizando o [Apache Spark](https://spark.apache.org/), tratados de acordo com a [LGPD](https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm) (Lei Geral de Proteção de Dados) e salvos na camada silver. E não diferente dos demais, estes são coletados da camada silver pelo [Apache Spark](https://spark.apache.org/), tratados de acordo com uma modelagem dimensional estrela e disponibilizados na camada ouro.
 
-Os acessos a cada camada são dados aos usuários de níveis 1 a 3, sendo bronze, silver e gold respectivamente.
+* Os acessos a cada camada são dados aos usuários de níveis 1 a 3, sendo bronze, silver e gold respectivamente.
 
-O armazenamento dos dados foi feito considerando o arquivo Parquet [Parquet](https://parquet.apache.org/).
+* O armazenamento dos dados foi feito considerando o arquivo [Parquet](https://parquet.apache.org/).
 
-As tecnologias foram conteinerizadas individualmente com a utilização do Docker [Docker](https://www.docker.com/) - permitindo assim serem distribuídas em servidores/máquinas distintas - porém neste *case*, rodando em um servidor OnPremises.
+* As tecnologias foram conteinerizadas individualmente com a utilização do Docker [Docker](https://www.docker.com/) - permitindo assim serem distribuídas em servidores/máquinas distintas - porém neste *case*, rodando em um servidor OnPremises.
 
-As aplicações contam com coletores/expositores de métricas para auxiliar na observabilidade.
+* As aplicações contam com coletores/expositores de métricas para auxiliar na observabilidade.
 
 ## Arquitetura técnica
 
-*lab/evidencias/Arquitetura_tecnica*
+pode ser visualizada em *lab/evidencias/Arquitetura_tecnica*
 
 ### Streaming
 
-O sistema transacional da Loja Simulada é compostO por uma aplicação em NodeJs [NodeJs](https://nodejs.org/en/) e
-uma instância de banco de dados MySQL [MySQL](https://www.mysql.com/). As *vendas*, assim que efetivadas, são
-encaminhadas para o Apacke kafka [Apacke kafka](https://kafka.apache.org/) no tópico vendas-deshboard-bronze (t1). O SparkStream  [SparkStream](https://spark.apache.org/docs/latest/structured-streaming-programming-guide.html)
+O sistema transacional da Loja Simulada é composto por uma aplicação em [NodeJs](https://nodejs.org/en/) e
+uma instância de banco de dados [MySQL](https://www.mysql.com/). As *vendas*, assim que efetivadas, são
+encaminhadas para o [Apacke kafka](https://kafka.apache.org/) no tópico vendas-deshboard-bronze (t1). O [SparkStream](https://spark.apache.org/docs/latest/structured-streaming-programming-guide.html)
 coleta deste tópico, faz a sumarização e encaminha para o tópico vendas-deshboard-gold
-(t2). O Merge é feito por uma API em NodeJs [NodeJs](https://nodejs.org/en/) que coleta no tópico t2 e através de uma
-conexão WebSocket (WS) [WebSocket](https://developer.mozilla.org/pt-BR/docs/Web/API/WebSockets_API), encaminha para um deshboard desenvolvido também em NodeJs [NodeJs](https://nodejs.org/en/)
-com o FrameWork ReactJs [ReactJs](https://react.dev/) e uma lib para gráficos (ChartJs).
+(t2). O Merge é feito por uma API em [NodeJs](https://nodejs.org/en/) que coleta no tópico t2 e através de uma
+conexão (WS) [WebSocket](https://developer.mozilla.org/pt-BR/docs/Web/API/WebSockets_API), encaminha para um deshboard desenvolvido também em [NodeJs](https://nodejs.org/en/)
+com o FrameWork [ReactJs](https://react.dev/) e uma lib para gráficos ([ChartJs](https://www.chartjs.org/)).
 
 ### Batch
 
 O processo batch *bronze* realiza a coleta no banco transacional da Loja Simulada,
 trazendo todos os dados de todas as tabelas, analisa e considera somente os registros
-novos e/ou atualizados, adicionando aos registros atual da camada bronze (praticamente
-um append), alem de adicionar uma chave substitutiva (surrogate key - SK) e uma data de referencia de carga, e salva no formato Parquet [Parquet](https://parquet.apache.org/).
-O processo batch *silver* realiza a leitura do arquivo Parquet [Parquet](https://parquet.apache.org/) da camada bronze, realiza a
-limpeza dos dados, aplica a anonimização e salva em formato Parquet [Parquet](https://parquet.apache.org/).
-O processo batch *gold* realiza a leitura do arquivo Parquet [Parquet](https://parquet.apache.org/) da camada silver, realiza a
-sumarização, aplicando a modelagem dimensional estrela, considerando aadição da dimensão tempo e salva em formato
-Parquet [Parquet](https://parquet.apache.org/), podendo então ser consumido por alguma ferramenta de BI/OLAP.
+novos e/ou atualizados, adicionando aos registros atuais da camada bronze (praticamente
+um append), alem de adicionar uma chave substitutiva (surrogate key - SK), uma data de referencia de carga, e salva no formato [Parquet](https://parquet.apache.org/).
+O processo batch *silver* realiza a leitura do arquivo [Parquet](https://parquet.apache.org/) da camada bronze, realiza a
+limpeza dos dados, aplica a anonimização e salva em formato [Parquet](https://parquet.apache.org/).
+O processo batch *gold* realiza a leitura do arquivo [Parquet](https://parquet.apache.org/) da camada silver, realiza a
+sumarização, aplicando a modelagem dimensional estrela, adiciona a dimensão tempo e salva em formato
+[Parquet](https://parquet.apache.org/), podendo então ser consumido por alguma ferramenta de BI/OLAP.
 
 ## Evidências
 
-A imagem */lab/evidencias/loja-a-api* apresenta os logs da loja (venda realizada) e da api depois de no tópico t1 para então encaminhar ao dashboard.
+A imagem em */lab/evidencias/loja-a-api.png* apresenta os logs da loja (venda realizada) e da api depois de ler no tópico t2 para então encaminhar ao dashboard.
 
-A imagem */lab/evidencias/dashboard* apresenta o dashboard assim atualizado.
+A imagem em */lab/evidencias/dashboard.png* apresenta o dashboard assim atualizado.
 
-A imagem */lab/evidencias/relacional* apresenta o modelo relacional da origem.
+A imagem em */lab/evidencias/relacional.png* apresenta o modelo relacional da origem.
 
-A imagem */lab/evidencias/ingestao-base-bronze* apresenta os logs resultantes da ingestão base bronze.
+A imagem em */lab/evidencias/ingestao-base-bronze.png* apresenta os logs resultantes da ingestão base bronze.
 
-A imagem */lab/evidencias/ingestao-base-silver* apresenta os logs resultantes da ingestão base silver.
+A imagem em */lab/evidencias/ingestao-base-silver.png* apresenta os logs resultantes da ingestão base silver.
 
-A imagem */lab/evidencias/ingestao-base-gold* apresenta os logs resultantes da ingestão base gold.
+A imagem em */lab/evidencias/ingestao-base-gold.png* apresenta os logs resultantes da ingestão base gold.
 
-A imagem */lab/evidencias/analise-bronze* apresenta a diferença entre o schema da base origem e o schema bronze, no qual são adicionados os campos *data_carga* e *surrogate_key*.
+A imagem em */lab/evidencias/analise-bronze.png* apresenta a diferença entre o schema da base origem e o schema bronze, no qual são adicionados os campos *data_carga* e *surrogate_key*.
 
-A imagem */lab/evidencias/analise-silver* apresenta a diferença no schema e a aplicação de criptografia, anonimização, considerando a LGPD (Lei Geral de Proteção de Dados) [LGPD](https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm).
+A imagem em */lab/evidencias/analise-silver.png* apresenta a diferença no schema e a aplicação de criptografia, anonimização, considerando a [LGPD](https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm) (Lei Geral de Proteção de Dados).
 
-A imagem */lab/evidencias/dimensional* apresenta o modelo dimensional gold.
+A imagem em */lab/evidencias/dimensional.png* apresenta o modelo dimensional gold.
 
 ## Arquivos fonte
 
@@ -172,7 +172,7 @@ A imagem */lab/evidencias/dimensional* apresenta o modelo dimensional gold.
     │── usuarios-acl.sh                                 # bash para criação de usuarios e ACL
     └── README.md                                       # README
 
-## Instalacao 
+## Instalação
 
 Faça o clone do projeto na pasta home *(~/)* de um usuário com privilégios administrativos (root)
 ```
@@ -192,13 +192,13 @@ Sertifique-se de que as dependências abaixo estejam instaladas
 * python3-pip   *
 * jupyter   *
 
-**O arquivo bash** *instalar-dependencias.sh* **pode auxiliar na instalação de algumas das dependencias acima (marcadas com *)- **porem, é importante se certificar se ele fez um bom trabalho antes de seguir adiante**
+**O arquivo bash** *instalar-dependencias.sh* **pode auxiliar na instalação de algumas das dependencias acima (marcadas com** * **) - porem, é importante se certificar se ele fez um bom trabalho antes de seguir adiante**
 ```
 $ sudo sh instalar-dependencias.sh
 ```
 
 ### build das imagens docker
-Execulte o arquito build.sh para criar as imagens dos apps *api-dashboard, dashboard e loja_simulada.
+Execulte o arquito build.sh para criar as imagens dos apps *api-dashboard, dashboard e loja_simulada*.
 ```
 $ sudo sh build.sh
 ```
@@ -244,7 +244,7 @@ Navegue até a pasta apps
 $ cd lab/apps
 ```
 
-Execulte o comando docker compose up **atente-se entre as variações deste comando**, algumas versões do docker funcionam com o comando *docker-compose up* - confira na documentação Docker [Docker](https://www.docker.com/).
+Execulte o comando docker compose up **atente-se entre as variações deste comando**, algumas versões do docker funcionam com o comando *docker-compose up* - confira na documentação [Docker](https://www.docker.com/).
 ```
 $ sudo docker compose up
 ```
@@ -261,7 +261,7 @@ execulte o comando 'jupyter notebook' para utiliza-lo no seu navegador de prefer
 $ jupter notebook
 ```
 
-Caso o seu navegador não abra automaticamente, copie o lind apresentado no terminal e cole na barra de endereços do navegador
+Caso o seu navegador não abra automaticamente, copie o link apresentado no terminal e cole na barra de endereços do navegador
 ```
 http://localhost:8888/?token=758e8bdfe08e1...............1ed5df1943f
 ```
@@ -278,7 +278,7 @@ Caso queira utilizar o comando curl para isto:
 ```
 $ curl -X PUT http://localhost:30001/update/<vendasPorMinuto>
 ```
-Onde <vendasPorMinuto> é a quantidade de vendas por minuto que quer que sejam geradas.
+Onde 'vendasPorMinuto' é a quantidade de vendas por minuto que quer que sejam geradas.
 
 Os demais arquivos na pasta root, *CASE-ingestao-bronze.ipynb*, *CASE-ingestao-silver.ipynb* e *CASE-ingestao-gold.ipynb* podem ser utilizados para ingestão conforme sugerido por seus nomes.
 
@@ -289,9 +289,9 @@ $ sudo mysql -h127.0.0.1 -P3306 -uroot -proot
 ```
 
 ### observabilidade
-O grafana está disponível no link *http://localhost:3000/login*.
+O grafana estará disponível no link *http://localhost:3000/login*.
 
-Importante saber o ip interno do prometheus para, então adicionar no grafana
+Importante saber o ip interno do prometheus para, então, adicionar no grafana.
 Para isto digite o comando *docker network inspect apps_loja*
 ```
 $ sudo docker network inspect apps_loja
