@@ -20,7 +20,8 @@ O sócio fundador da Loja Simulada (uma loja de bicicleta) expos as seguintes ne
 
 3. A schema do banco de dados foi baseado no curso **Formação Engenharia de Dados: Domine Big Data!** [Formação Engenharia de Dados: Domine Big Data!](https://www.udemy.com/course/engenheiro-de-dados) do instrutor *Fernando Amaral* [Fernando Amaral](https://www.udemy.com/course/engenheiro-de-dados/#instructor-1)
 
-4. Além do conteúdo parcialmente aproveitado do curso citado no item 3, alguns dados foram gerados aleatoreamente como: cpf, telefone, origem racial afim de compor a experiência do case em questão atravéz das aplicações em python contidas neste projeto (pyCPFgen.py, pyCELgen.py e pyOrigemRacial.py). ***link para os arquivos - ATENÇÃO***
+4. Além do conteúdo parcialmente aproveitado do curso citado no item 3, alguns dados foram gerados aleatoreamente como: cpf, telefone, origem racial afim de compor a experiência do case em questão atravéz das aplicações em python contidas neste projeto (pyCPFgen.py, pyCELgen.py e pyOrigemRacial.py). 
+Estes podem ser encontrados em */lab/utils*
 
 ## Arquitetura da solução
 
@@ -40,7 +41,7 @@ As aplicações contam com coletores/expositores de métricas para auxiliar na o
 
 ## Arquitetura técnica
 
-![Arquitetura_tecnica](URL_da_Imagem) ***revisar url da imagem - ATENÇÃO***
+*lab/evidencias/Arquitetura_tecnica*
 
 ### Streaming
 
@@ -66,32 +67,23 @@ Parquet [Parquet](https://parquet.apache.org/), podendo então ser consumido por
 
 ## Evidências
 
-![loja-a-api](link imagem aqui) ***link imagem aqui - ATENÇÃO***
-A imagem acima apresenta os logs da loja (venda realizada) e da api depois de no tópico t1 para então encaminhar ao dashboard.
+A imagem */lab/evidencias/loja-a-api* apresenta os logs da loja (venda realizada) e da api depois de no tópico t1 para então encaminhar ao dashboard.
 
-![dashboard](link imagem aqui) ***link imagem aqui - ATENÇÃO***
-A imagem acima apresenta o dashboard assim atualizado.
+A imagem */lab/evidencias/dashboard* apresenta o dashboard assim atualizado.
 
-![relacional](link imagem aqui) ***link imagem aqui - ATENÇÃO***
-A imagem acima apresenta o modelo relacional da origem.
+A imagem */lab/evidencias/relacional* apresenta o modelo relacional da origem.
 
-![ingestao-base-bronze](link imagem aqui) ***link imagem aqui - ATENÇÃO***
-A imagem acima apresenta os logs resultantes da ingestão base bronze.
+A imagem */lab/evidencias/ingestao-base-bronze* apresenta os logs resultantes da ingestão base bronze.
 
-![ingestao-base-silver](link imagem aqui) ***link imagem aqui - ATENÇÃO***
-A imagem acima apresenta os logs resultantes da ingestão base silver.
+A imagem */lab/evidencias/ingestao-base-silver* apresenta os logs resultantes da ingestão base silver.
 
-![ingestao-base-gold](link imagem aqui) ***link imagem aqui - ATENÇÃO***
-A imagem acima apresenta os logs resultantes da ingestão base gold.
+A imagem */lab/evidencias/ingestao-base-gold* apresenta os logs resultantes da ingestão base gold.
 
-![analise-bronze](link imagem aqui) ***link imagem aqui - ATENÇÃO***
-A imagem acima apresenta a diferença entre o schema da base origem e o schema bronze, no qual são adicionados os campos *data_carga* e *surrogate_key*.
+A imagem */lab/evidencias/analise-bronze* apresenta a diferença entre o schema da base origem e o schema bronze, no qual são adicionados os campos *data_carga* e *surrogate_key*.
 
-![analise-silver](link imagem aqui) ***link imagem aqui - ATENÇÃO***
-A imagem acima apresenta a diferença no schema e a aplicação de criptografia, anonimização, considerando a LGPD (Lei Geral de Proteção de Dados) [LGPD](https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm).
+A imagem */lab/evidencias/analise-silver* apresenta a diferença no schema e a aplicação de criptografia, anonimização, considerando a LGPD (Lei Geral de Proteção de Dados) [LGPD](https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm).
 
-![dimensional](link imagem aqui) ***link imagem aqui - ATENÇÃO***
-A imagem acima apresenta o modelo dimensional gold.
+A imagem */lab/evidencias/dimensional* apresenta o modelo dimensional gold.
 
 ## Arquivos fonte
 
@@ -280,7 +272,7 @@ Abra este pelo jupyter notebook e execulte todas as células.
 Dando tudo certo até aqui, você já pode acessar o dashboard pelo link *localhost:5000*.
 
 A aplicação realiza geração aleatória de *vendas* com uma fequencia de 3 vendas por minuto, mas isso pode ser alterado conforme se queira sempre respeitando os limites de infraestrutura na qual o projeto estiver rodando.
-Para realizar a alteração da quantidade de vendas por minuto, utilize a URL *http://localhost:30001/update/<vendasPorMinuto>' com o verbo PUT.
+Para realizar a alteração da quantidade de vendas por minuto, utilize a URL *http://localhost:30001/update/<vendasPorMinuto>* com o verbo PUT.
 
 Caso queira utilizar o comando curl para isto:
 ```
