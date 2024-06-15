@@ -1,2 +1,10 @@
 */**/node_modules
-*/**/data/
+*/**/data
+*/**/root/.ipynb_checkpoints
+*/**/root/check.txt
+*/**/SILVER/
+*/**/GOLD/
+*/**/BRONZE/
+*/**/user1/
+*/**/user2/
+*/**/user3/
