@@ -1,9 +1,0 @@
-A LGPD (Lei Geral de Proteção de Dados) define diversos tipos de dados pessoais e sensíveis que são protegidos sob a legislação brasileira. Aqui estão alguns exemplos:
-
-1.Dados Pessoais: São informações que identificam ou que, quando usadas em conjunto, podem identificar uma pessoa física. Isso inclui nome, CPF, RG, endereço, e-mail, entre outros.
-2.Dados Sensíveis: São informações sobre origem racial ou étnica, convicções religiosas, opiniões políticas, filiação a sindicatos ou organizações de natureza religiosa, filosófica ou política, dados genéticos, dados biométricos, dados relativos à saúde ou à vida sexual, dados relacionados à criança e ao adolescente, entre outros, que possam gerar discriminação ou preconceito.
-3.Dados Anonimizados: Informações que não identificam uma pessoa específica e que não podem ser facilmente rastreadas para identificar um indivíduo sem o uso de informações adicionais.
-4.Dados Pseudonimizados: São dados pessoais que foram modificados de forma que não possam ser atribuídos a uma pessoa específica sem o uso de informações adicionais.
-5.Dados de Menores: Informações relacionadas a crianças e adolescentes, que exigem consentimento específico e, em alguns casos, consentimento dos responsáveis legais para processamento.
-6.Dados Empresariais: Informações relacionadas a empresas e organizações, como CNPJ, dados de contato empresarial, informações financeiras, entre outros.
-A LGPD estabelece diretrizes para o tratamento adequado e legal desses dados, incluindo o consentimento do titular dos dados, a finalidade do uso, a segurança da informação e os direitos dos titulares dos dados.
