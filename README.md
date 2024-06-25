@@ -213,7 +213,10 @@ $ sudo sh usuarios-acl.sh
 ### prometheus
 Configure o arquivo */etc/docker/daemon.json* com o ip do docker conforme abaixo
 encontre o ip:
-* run ip addr show docker0 to get inet ip (docker0)
+```
+$ ip addr show docker0
+```
+inet <IP>
 
 Atualize ou crie o arquivo */etc/docker/daemon.json*:
 ```
@@ -233,8 +236,8 @@ Abra o arquivo prometheus.yml e configure o *targets* do job_name: *docker* para
 
 Agora reinicie o serviço:
 ```
-sudo run systemctl daemon-reload
-sudo run systemctl restart docker
+sudo systemctl daemon-reload
+sudo systemctl restart docker
 ```
 
 ### iniciando o projeto
@@ -258,7 +261,7 @@ $ cd ~/lisarbjc/lab/lake/root
 ```
 execute o comando 'jupyter notebook' para utiliza-lo no seu navegador de preferência.
 ```
-$ jupter notebook
+$ jupyter notebook
 ```
 
 Caso o seu navegador não abra automaticamente, copie o link apresentado no terminal e cole na barra de endereços do navegador
