@@ -2,13 +2,13 @@
 
 ## Objetivo
 
-Case engenharia de dados. Pipeline de injestão de dados de uma loja fictícia chamada aqui de Loja Simulada.
+Case engenharia de dados. Pipeline de ingestão de dados de uma loja fictícia chamada aqui de Loja Simulada.
 
 ## Problema
 
 O sócio fundador da Loja Simulada (uma loja de bicicleta) expos as seguintes necessidades:
 
-1. Acompanhar em tempo 'real' as seguintes informações do dia atual: totais de preço, desconto e valor, em um grafico de pizza permitindo assim que ele acompanhe e até intervenha junto ao time comercial.
+1. Acompanhar em tempo 'real' as seguintes informações do dia atual: totais de preço, desconto e valor, em um gráfico de pizza permitindo assim que ele acompanhe e até intervenha junto ao time comercial.
 
 2. Disponibilizar os dados em uma modelagem que permita ser analisada por ferramentas de BI/OLAP.
 
@@ -16,20 +16,20 @@ O sócio fundador da Loja Simulada (uma loja de bicicleta) expos as seguintes ne
 
 1. Possui um sistema de vendas (transacional com vendas geradas aleatoriamente);
 
-2. Detém, de todos os seus clientes e funcionários (titulares dos dados), o concentimento para fazer o compartilhamento e/ou tratamento de seus dados com parceiros para fins de análises no contexto da Loja Simulada;
+2. Detém, de todos os seus clientes e funcionários (titulares dos dados), o consentimento para fazer o compartilhamento e/ou tratamento de seus dados com parceiros para fins de análises no contexto da Loja Simulada;
 
 3. A schema do banco de dados foi baseado no curso [Formação Engenharia de Dados: Domine Big Data!](https://www.udemy.com/course/engenheiro-de-dados) do instrutor [Fernando Amaral](https://www.udemy.com/course/engenheiro-de-dados/#instructor-1)
 
-4. Além do conteúdo parcialmente aproveitado do curso citado no item 3, alguns dados foram gerados aleatoreamente como: cpf, telefone, origem racial afim de compor a experiência do case em questão atravéz das aplicações em python contidas neste projeto (pyCPFgen.py, pyCELgen.py e pyOrigemRacial.py). 
+4. Além do conteúdo parcialmente aproveitado do curso citado no item 3, alguns dados foram gerados aletoriamente como: cpf, telefone, origem racial afim de compor a experiência do case em questão através das aplicações em python contidas neste projeto (pyCPFgen.py, pyCELgen.py e pyOrigemRacial.py). 
 Estes podem ser encontrados em */lab/utils*
 
 ## Arquitetura da solução
 
 * A arquitetura foi pensada considerando a arquitetura Lambda.
 
-* Para o acompanhamento em tempo real (near real time para ser mais exato), o responsável pelo sistema transacional da Loja Simulada ficou com a responsabilidade de fornecer para um tópico do [Apacke kafka](https://kafka.apache.org/), os dados de cada tranzação assim que esta esteja concluída. O [SparkStream](https://spark.apache.org/docs/latest/structured-streaming-programming-guide.html) (Structured Streaming) ouve este mesmo tópico, realiza a sumarização das informações e encaminha para um segundo tópico. Uma API - desenvolvidad em [NodeJs](https://nodejs.org/en/) - consome estes dados neste segundo tópico e, conectada via (WS) [WebSocket](https://developer.mozilla.org/pt-BR/docs/Web/API/WebSockets_API) à uma aplicação customizada - também desenvolvida em [NodeJs](https://nodejs.org/en/) - para dashboard, atualiza o dashboard.
+* Para o acompanhamento em tempo real (near real time para ser mais exato), o responsável pelo sistema transacional da Loja Simulada ficou com a responsabilidade de fornecer para um tópico do [Apacke kafka](https://kafka.apache.org/), os dados de cada transação assim que esta esteja concluída. O [SparkStream](https://spark.apache.org/docs/latest/structured-streaming-programming-guide.html) (Structured Streaming) ouve este mesmo tópico, realiza a sumarização das informações e encaminha para um segundo tópico. Uma API - desenvolvida em [NodeJs](https://nodejs.org/en/) - consome estes dados neste segundo tópico e, conectada via (WS) [WebSocket](https://developer.mozilla.org/pt-BR/docs/Web/API/WebSockets_API) à uma aplicação customizada - também desenvolvida em [NodeJs](https://nodejs.org/en/) - para dashboard, atualiza o dashboard.
 
-* Para a disponibilização dos dados em um formato adequado para análise por ferramentas apropriadas de BI/OLAP, foi considerado a arquiteura medalhão, contendo as camadas bronze, silver e gold. Fazendo a coleta dos dados no banco de dados transacional do sistema Loja Simulada periodicamente em horário apropriado - trazendo menor impacto possível para a operação da loja (transacional) - com o [Apache Spark](https://spark.apache.org/), e disponibilizado em uma camada bronze (somente dados novos e/ou alterados). Tembém periodicamente, os dados são coletados da camada bronze utilizando o [Apache Spark](https://spark.apache.org/), tratados de acordo com a [LGPD](https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm) (Lei Geral de Proteção de Dados) e salvos na camada silver. E não diferente dos demais, estes são coletados da camada silver pelo [Apache Spark](https://spark.apache.org/), tratados de acordo com uma modelagem dimensional estrela e disponibilizados na camada ouro.
+* Para a disponibilização dos dados em um formato adequado para análise por ferramentas apropriadas de BI/OLAP, foi considerado a arquitetura medalhão, contendo as camadas bronze, silver e gold. Fazendo a coleta dos dados no banco de dados transacional do sistema Loja Simulada periodicamente em horário apropriado - trazendo menor impacto possível para a operação da loja (transacional) - com o [Apache Spark](https://spark.apache.org/), e disponibilizado em uma camada bronze (somente dados novos e/ou alterados). Também periodicamente, os dados são coletados da camada bronze utilizando o [Apache Spark](https://spark.apache.org/), tratados de acordo com a [LGPD](https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm) (Lei Geral de Proteção de Dados) e salvos na camada silver. E não diferente dos demais, estes são coletados da camada silver pelo [Apache Spark](https://spark.apache.org/), tratados de acordo com uma modelagem dimensional estrela e disponibilizados na camada ouro.
 
 * Os acessos a cada camada são dados aos usuários de níveis 1 a 3, sendo bronze, silver e gold respectivamente.
 
@@ -58,7 +58,7 @@ com o FrameWork [ReactJs](https://react.dev/) e uma lib para gráficos ([ChartJs
 O processo batch *bronze* realiza a coleta no banco transacional da Loja Simulada,
 trazendo todos os dados de todas as tabelas, analisa e considera somente os registros
 novos e/ou atualizados, adicionando aos registros atuais da camada bronze (praticamente
-um append), alem de adicionar uma chave substitutiva (surrogate key - SK), uma data de referencia de carga, e salva no formato [Parquet](https://parquet.apache.org/).
+um append), além de adicionar uma chave substitutiva (surrogate key - SK), uma data de referência de carga, e salva no formato [Parquet](https://parquet.apache.org/).
 O processo batch *silver* realiza a leitura do arquivo [Parquet](https://parquet.apache.org/) da camada bronze, realiza a
 limpeza dos dados, aplica a anonimização e salva em formato [Parquet](https://parquet.apache.org/).
 O processo batch *gold* realiza a leitura do arquivo [Parquet](https://parquet.apache.org/) da camada silver, realiza a
@@ -69,7 +69,7 @@ sumarização, aplicando a modelagem dimensional estrela, adiciona a dimensão t
 
 A imagem em */lab/evidencias/loja-a-api.png* apresenta os logs da loja (venda realizada) e da api depois de ler no tópico t2 para então encaminhar ao dashboard.
 
-A imagem em */lab/evidencias/dashboard.png* apresenta o dashboard assim atualizado.
+A imagem em */lab/evidencias/dashboard.png* apresenta o dashboard atualizado.
 
 A imagem em */lab/evidencias/relacional.png* apresenta o modelo relacional da origem.
 
@@ -192,20 +192,20 @@ Sertifique-se de que as dependências abaixo estejam instaladas
 * python3-pip   *
 * jupyter   *
 
-**O arquivo bash** *instalar-dependencias.sh* **pode auxiliar na instalação de algumas das dependencias acima (marcadas com** * **) - porem, é importante se certificar se ele fez um bom trabalho antes de seguir adiante**
+**O arquivo bash** *instalar-dependencias.sh* **pode auxiliar na instalação de algumas das dependências acima (marcadas com** * **) - porem, é importante se certificar se ele fez um bom trabalho antes de seguir adiante**
 ```
 $ sudo sh instalar-dependencias.sh
 ```
 
 ### build das imagens docker
-Execulte o arquito build.sh para criar as imagens dos apps *api-dashboard, dashboard e loja_simulada*.
+Execute o arquito build.sh para criar as imagens dos apps *api-dashboard, dashboard e loja_simulada*.
 ```
 $ sudo sh build.sh
 ```
 
-### usuarios e ACL
+### usuários e ACL
 Certifique-se de que a estrutura de pastas e arquivos esta como apresentado acima, isso irá impactar na ACL diretamente.
-Estando as pastas user1, user2 e user3 de forma correta, execulte o arquivo *usuarios-acl*.
+Estando as pastas user1, user2 e user3 de forma correta, execute o arquivo *usuarios-acl*.
 ```
 $ sudo sh usuarios-acl.sh
 ```
@@ -213,7 +213,10 @@ $ sudo sh usuarios-acl.sh
 ### prometheus
 Configure o arquivo */etc/docker/daemon.json* com o ip do docker conforme abaixo
 encontre o ip:
-* run ip addr show docker0 to get inet ip (docker0)
+```
+$ ip addr show docker0
+```
+inet <IP>
 
 Atualize ou crie o arquivo */etc/docker/daemon.json*:
 ```
@@ -233,8 +236,8 @@ Abra o arquivo prometheus.yml e configure o *targets* do job_name: *docker* para
 
 Agora reinicie o serviço:
 ```
-sudo run systemctl daemon-reload
-sudo run systemctl restart docker
+sudo systemctl daemon-reload
+sudo systemctl restart docker
 ```
 
 ### iniciando o projeto
@@ -244,7 +247,7 @@ Navegue até a pasta apps
 $ cd lab/apps
 ```
 
-Execulte o comando docker compose up **atente-se entre as variações deste comando**, algumas versões do docker funcionam com o comando *docker-compose up* - confira na documentação [Docker](https://www.docker.com/).
+Execute o comando docker compose up **atente-se entre as variações deste comando**, algumas versões do docker funcionam com o comando *docker-compose up* - confira na documentação [Docker](https://www.docker.com/).
 ```
 $ sudo docker compose up
 ```
@@ -256,9 +259,9 @@ abra outro terminal e navegue para a pasta lake lisarbjc/lab/lake/*root*
 ```
 $ cd ~/lisarbjc/lab/lake/root
 ```
-execulte o comando 'jupyter notebook' para utiliza-lo no seu navegador de preferência.
+execute o comando 'jupyter notebook' para utiliza-lo no seu navegador de preferência.
 ```
-$ jupter notebook
+$ jupyter notebook
 ```
 
 Caso o seu navegador não abra automaticamente, copie o link apresentado no terminal e cole na barra de endereços do navegador
@@ -267,11 +270,11 @@ http://localhost:8888/?token=758e8bdfe08e1...............1ed5df1943f
 ```
 
 Lá você vai encontrar o arquivo *CASE-dashboard.ipynb* responsavel pela merge do streaming.
-Abra este pelo jupyter notebook e execulte todas as células.
+Abra este pelo jupyter notebook e execute todas as células.
 
 Dando tudo certo até aqui, você já pode acessar o dashboard pelo link *localhost:5000*.
 
-A aplicação realiza geração aleatória de *vendas* com uma fequencia de 3 vendas por minuto, mas isso pode ser alterado conforme se queira sempre respeitando os limites de infraestrutura na qual o projeto estiver rodando.
+A aplicação loja_simulada realiza geração aleatória de *vendas* com uma fequencia de 3 vendas por minuto, mas isso pode ser alterado conforme se queira sempre respeitando os limites de infraestrutura na qual o projeto estiver rodando.
 Para realizar a alteração da quantidade de vendas por minuto, utilize a URL *http://localhost:30001/update/<vendasPorMinuto>* com o verbo PUT.
 
 Caso queira utilizar o comando curl para isto:
