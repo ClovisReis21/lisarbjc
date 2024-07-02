@@ -18,7 +18,7 @@ O sócio fundador da Loja Simulada (uma loja de bicicleta) expos as seguintes ne
 
 2. Detém, de todos os seus clientes e funcionários (titulares dos dados), o consentimento para fazer o compartilhamento e/ou tratamento de seus dados com parceiros para fins de análises no contexto da Loja Simulada;
 
-3. A schema do banco de dados foi baseado no curso [Formação Engenharia de Dados: Domine Big Data!](https://www.udemy.com/course/engenheiro-de-dados) do instrutor [Fernando Amaral](https://www.udemy.com/course/engenheiro-de-dados/#instructor-1)
+3. O schema do banco de dados foi baseado no curso [Formação Engenharia de Dados: Domine Big Data!](https://www.udemy.com/course/engenheiro-de-dados) do instrutor [Fernando Amaral](https://www.udemy.com/course/engenheiro-de-dados/#instructor-1)
 
 4. Além do conteúdo parcialmente aproveitado do curso citado no item 3, alguns dados foram gerados aletoriamente como: cpf, telefone, origem racial afim de compor a experiência do case em questão através das aplicações em python contidas neste projeto (pyCPFgen.py, pyCELgen.py e pyOrigemRacial.py). 
 Estes podem ser encontrados em */lab/utils*
@@ -27,7 +27,7 @@ Estes podem ser encontrados em */lab/utils*
 
 * A arquitetura foi pensada considerando a arquitetura Lambda.
 
-* Para o acompanhamento em tempo real (near real time para ser mais exato), o responsável pelo sistema transacional da Loja Simulada ficou com a responsabilidade de fornecer para um tópico do [Apacke kafka](https://kafka.apache.org/), os dados de cada transação assim que esta esteja concluída. O [SparkStream](https://spark.apache.org/docs/latest/structured-streaming-programming-guide.html) (Structured Streaming) ouve este mesmo tópico, realiza a sumarização das informações e encaminha para um segundo tópico. Uma API - desenvolvida em [NodeJs](https://nodejs.org/en/) - consome estes dados neste segundo tópico e, conectada via (WS) [WebSocket](https://developer.mozilla.org/pt-BR/docs/Web/API/WebSockets_API) à uma aplicação customizada - também desenvolvida em [NodeJs](https://nodejs.org/en/) - para dashboard, atualiza o dashboard.
+* Para o acompanhamento em tempo real (near real time para ser mais exato), o responsável pelo sistema transacional da Loja Simulada ficou com a responsabilidade de fornecer para um tópico do [Apache kafka](https://kafka.apache.org/), os dados de cada transação assim que esta esteja concluída. O [SparkStream](https://spark.apache.org/docs/latest/structured-streaming-programming-guide.html) (Structured Streaming) ouve este mesmo tópico, realiza a sumarização das informações e encaminha para um segundo tópico. Uma API - desenvolvida em [NodeJs](https://nodejs.org/en/) - consome estes dados neste segundo tópico e, conectada via (WS) [WebSocket](https://developer.mozilla.org/pt-BR/docs/Web/API/WebSockets_API) à uma aplicação customizada - também desenvolvida em [NodeJs](https://nodejs.org/en/) - para dashboard, atualiza o dashboard.
 
 * Para a disponibilização dos dados em um formato adequado para análise por ferramentas apropriadas de BI/OLAP, foi considerado a arquitetura medalhão, contendo as camadas bronze, silver e gold. Fazendo a coleta dos dados no banco de dados transacional do sistema Loja Simulada periodicamente em horário apropriado - trazendo menor impacto possível para a operação da loja (transacional) - com o [Apache Spark](https://spark.apache.org/), e disponibilizado em uma camada bronze (somente dados novos e/ou alterados). Também periodicamente, os dados são coletados da camada bronze utilizando o [Apache Spark](https://spark.apache.org/), tratados de acordo com a [LGPD](https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm) (Lei Geral de Proteção de Dados) e salvos na camada silver. E não diferente dos demais, estes são coletados da camada silver pelo [Apache Spark](https://spark.apache.org/), tratados de acordo com uma modelagem dimensional estrela e disponibilizados na camada ouro.
 
@@ -47,7 +47,7 @@ pode ser visualizada em *lab/evidencias/Arquitetura_tecnica*
 
 O sistema transacional da Loja Simulada é composto por uma aplicação em [NodeJs](https://nodejs.org/en/) e
 uma instância de banco de dados [MySQL](https://www.mysql.com/). As *vendas*, assim que efetivadas, são
-encaminhadas para o [Apacke kafka](https://kafka.apache.org/) no tópico vendas-deshboard-bronze (t1). O [SparkStream](https://spark.apache.org/docs/latest/structured-streaming-programming-guide.html)
+encaminhadas para o [Apache kafka](https://kafka.apache.org/) no tópico vendas-deshboard-bronze (t1). O [SparkStream](https://spark.apache.org/docs/latest/structured-streaming-programming-guide.html)
 coleta deste tópico, faz a sumarização e encaminha para o tópico vendas-deshboard-gold
 (t2). O Merge é feito por uma API em [NodeJs](https://nodejs.org/en/) que coleta no tópico t2 e através de uma
 conexão (WS) [WebSocket](https://developer.mozilla.org/pt-BR/docs/Web/API/WebSockets_API), encaminha para um deshboard desenvolvido também em [NodeJs](https://nodejs.org/en/)
@@ -269,7 +269,7 @@ Caso o seu navegador não abra automaticamente, copie o link apresentado no term
 http://localhost:8888/?token=758e8bdfe08e1...............1ed5df1943f
 ```
 
-Lá você vai encontrar o arquivo *CASE-dashboard.ipynb* responsavel pela merge do streaming.
+Lá você vai encontrar o arquivo *CASE-dashboard.ipynb* utilizado no streaming.
 Abra este pelo jupyter notebook e execute todas as células.
 
 Dando tudo certo até aqui, você já pode acessar o dashboard pelo link *localhost:5000*.
@@ -281,7 +281,7 @@ Caso queira utilizar o comando curl para isto:
 ```
 $ curl -X PUT http://localhost:30001/update/<vendasPorMinuto>
 ```
-Onde 'vendasPorMinuto' é a quantidade de vendas por minuto que quer que sejam geradas.
+Onde 'vendasPorMinuto' é a quantidade de vendas por minuto que se quer gerar.
 
 Os demais arquivos na pasta root, *CASE-ingestao-bronze.ipynb*, *CASE-ingestao-silver.ipynb* e *CASE-ingestao-gold.ipynb* podem ser utilizados para ingestão conforme sugerido por seus nomes.
 
